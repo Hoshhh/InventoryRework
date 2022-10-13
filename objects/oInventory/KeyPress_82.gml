@@ -1,0 +1,1 @@
+InventoryRemove(id, item.orangepotion)
