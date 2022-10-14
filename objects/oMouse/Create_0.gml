@@ -3,6 +3,7 @@ slotHover = -1;
 inventoryDrag = -1;
 slotDrag = -1;
 itemDrag = -1;
+itemAmount = 0;
 
 mouseOver = function() {
 	//Empty hover results
@@ -11,8 +12,10 @@ mouseOver = function() {
 	
 	//Check for inventory slot hover
 	with(oInventory) {
-		other.slotHover = selected_slot;
-		other.inventoryHover = id;
+		if (mouse_in_inventory) {
+			other.slotHover = selected_slot;
+			other.inventoryHover = id;
+		}
 	}
 }
 
@@ -23,6 +26,7 @@ stateFree = function() {
 		//Enter drag state
 		state = stateDrag;
 		itemDrag = inventoryHover.inventory[slotHover].itemInSlot;
+		itemAmount = inventoryHover.inventory[slotHover].amount;
 		inventoryDrag = inventoryHover;
 		slotDrag = slotHover;
 	}
@@ -32,7 +36,14 @@ stateDrag = function() {
 	mouseOver()
 	if (mouse_check_button_pressed(mb_left)) {
 		//Swap with slot hovering
-		if (slotHover != -1) InventorySwap(inventoryDrag, slotDrag, inventoryHover, slotHover)
+		if (slotHover != -1) {
+			if (itemDrag != inventoryHover.inventory[slotHover].itemInSlot) {
+				InventorySwap(inventoryDrag, slotDrag, inventoryHover, slotHover)
+			} else if (itemDrag == inventoryHover.inventory[slotHover].itemInSlot) {
+				show_debug_message("true") 
+				InventoryStack(inventoryHover, itemDrag, itemAmount, slotDrag, slotHover)
+			}
+		}
 		
 		//Return to free state
 		state = stateFree;
@@ -40,6 +51,7 @@ stateDrag = function() {
 		inventoryDrag = -1;
 		slotDrag = -1;
 	}
+	
 }
 
 state = stateFree

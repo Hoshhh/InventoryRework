@@ -5,6 +5,7 @@ scale = 4;
 cell_size = 16;
 inv_slots_width = 6;
 inv_slots_height = 4;
+mouse_in_inventory = false;
 
 selected_slot = 0;
 m_slotx = 0;
@@ -63,6 +64,7 @@ enum item {
 }
 
 inventory = array_create(INVENTORY_SLOTS, -1)
+
 
 var yy = 0; repeat(INVENTORY_SLOTS)
 {

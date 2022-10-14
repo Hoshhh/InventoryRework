@@ -1,5 +1,10 @@
 var c = c_yellow
-draw_text_color(10,30, string(inventory[1].itemInSlot), c,c,c,c, 1);
+draw_set_font(fnt_smalldigits);
+
+for (var j = 0; j < INVENTORY_SLOTS; j++) {
+	var ydist = 20
+	draw_text_color(10,ydist*j + 10, string(inventory[j]) + "\n", c,c,c,c, 1);
+}
 
 
 draw_sprite_part_ext(
@@ -17,7 +22,7 @@ for (var i = 0; i < INVENTORY_SLOTS; i++) {
 	var yy =  slots_y + ((cell_size + y_buffer)*iy*scale);
 	
 	var iitem = inventory[i].itemInSlot
-	if (iitem > -1) {
+	if (iitem > 0) {
 		sx = (iitem mod spr_inv_items_columns)*cell_size;
 		sy = (iitem div spr_inv_items_columns)*cell_size;	
 	}
@@ -28,7 +33,7 @@ for (var i = 0; i < INVENTORY_SLOTS; i++) {
 	switch(i) {
 	
 		case selected_slot: 
-			if (iitem > -1) {
+			if (iitem > 0) {
 				draw_sprite_part_ext(spr_inv_items, 0, sx, sy, cell_size, cell_size, xx, yy, scale, scale, c_white, 1);	
 			}
 			
@@ -38,14 +43,22 @@ for (var i = 0; i < INVENTORY_SLOTS; i++) {
 		break;
 		
 		default: 
-			if (iitem > -1) {	
+			if (iitem > 0) {	
 				draw_sprite_part_ext(spr_inv_items, 0, sx, sy, cell_size, cell_size, xx, yy, scale, scale, c_white, 1);	
 			}
 		break;
 	}
+	
+	//Draw item number
+	if (iitem > 0)
+	{
+		var number = inventory[i].amount;
+		var c = c_black;
+		draw_text_color(xx + 3, yy + 3, string(number), c,c,c,c, 1);
+	}
 }
 
-if (oMouse.itemDrag != -1) {
+if (oMouse.itemDrag != 0) {
 	iitem = oMouse.itemDrag;
 	sx = (iitem mod spr_inv_items_columns)*cell_size;
 	sy = (iitem div spr_inv_items_columns)*cell_size;	

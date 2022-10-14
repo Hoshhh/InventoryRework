@@ -1,1 +1,1 @@
-InventoryRemove(id, item.orangepotion)
+InventoryRemove(id, item.copperore)
