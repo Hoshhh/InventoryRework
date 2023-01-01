@@ -1,1 +1,1 @@
-InventoryRemove(id, item.copperore)
+InventoryRemove(id, item.copperore, 2)

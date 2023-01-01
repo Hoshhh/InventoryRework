@@ -1,1 +1,1 @@
-InventoryAdd(id, irandom_range(1, item.height-1), 1)
+InventoryAdd(id, irandom_range(1, item.height-1), 2)

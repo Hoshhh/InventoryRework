@@ -7,12 +7,15 @@ function InventorySearch(rootObject, itemType) {
 	return(-1);
 }
 
-function InventoryRemove(rootObject, itemType) {
+function InventoryRemove(rootObject, itemType, _amount) {
 	var _slot = InventorySearch(rootObject, itemType);
 	if (_slot != -1) {
 		with(rootObject) {
-			inventory[_slot].itemInSlot = -1;
-			inventory[_slot].amount--;
+			inventory[_slot].amount -= _amount;
+			
+			if (inventory[_slot].amount <= 0) {
+				inventory[_slot].itemInSlot = -1;	
+			}
 		}
 		return true;
 	} else return false;
